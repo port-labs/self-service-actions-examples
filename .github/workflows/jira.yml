@@ -1,0 +1,78 @@
+name: Report a bug in Jira
+
+on:
+  workflow_dispatch:
+    inputs:
+      description:
+        required: true
+        type: string
+      short_title:
+        required: true
+        type: string
+      priority:
+        required: true
+        type: string
+      port_payload:
+        required: true
+        type: string
+
+
+jobs:
+  create_jira_issue:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login
+      uses: atlassian/gajira-login@v3
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+    - name: Get Organization from Port
+      id: port-github-action
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
+        clientSecret: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
+        identifier: ${{fromJson(inputs.port_payload).payload.entity.relations.organization}}
+        blueprint: organization
+        operation: GET
+
+    - name: Inform of start of Jira issue creation
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
+        clientSecret: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
+        operation: PATCH_RUN
+        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        logMessage: |
+            Creating a new Jira issue.. ⛴️
+
+    - name: Create Jira issue
+      id: create
+      uses: atlassian/gajira-create@v3
+      with:
+        project: PORT
+        issuetype: Bug
+        summary:  Bug | ${{github.event.inputs.short_title}}
+        description: |
+          ${{github.event.inputs.description}}
+
+          ${{github.event.inputs.logrocket_recording}}
+        fields: '{"priority": {"name": "${{inputs.priority}}"}}'
+
+        # Example with custom fields
+        # fields: '{"custom_12345": "label label", "priority": {"name": "${{inputs.priority}}"}}'
+
+
+    - name: Inform of start of Jira
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
+        clientSecret: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
+        operation: PATCH_RUN
+        link: https://getport.atlassian.net/browse/${{ steps.create.outputs.issue }}
+        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        logMessage: |
+           Jira issue created! ✅
+           The issue id is: ${{ steps.create.outputs.issue }}
