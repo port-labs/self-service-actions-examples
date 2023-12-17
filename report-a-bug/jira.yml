@@ -1,3 +1,6 @@
+## This Workflow creates a basic Jira bug and updates in Port
+## Remove comments and edit for more fields as part of the Jira bug
+
 name: Report a bug in Jira
 
 on:
@@ -9,13 +12,15 @@ on:
       short_title:
         required: true
         type: string
-      priority:
-        required: true
-        type: string
+#     priority:
+#       required: true
+#       type: string
+#     custom_12345:
+#     required: false
+#     type: string
       port_payload:
         required: true
         type: string
-
 
 jobs:
   create_jira_issue:
@@ -27,16 +32,6 @@ jobs:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-
-    - name: Get Organization from Port
-      id: port-github-action
-      uses: port-labs/port-github-action@v1
-      with:
-        clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
-        clientSecret: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
-        identifier: ${{fromJson(inputs.port_payload).payload.entity.relations.organization}}
-        blueprint: organization
-        operation: GET
 
     - name: Inform of start of Jira issue creation
       uses: port-labs/port-github-action@v1
@@ -52,17 +47,14 @@ jobs:
       id: create
       uses: atlassian/gajira-create@v3
       with:
-        project: PORT
+        project: ENTER_JIRA_PROJECT_NAME
         issuetype: Bug
         summary:  Bug | ${{github.event.inputs.short_title}}
         description: |
           ${{github.event.inputs.description}}
 
-          ${{github.event.inputs.logrocket_recording}}
-        fields: '{"priority": {"name": "${{inputs.priority}}"}}'
-
-        # Example with custom fields
-        # fields: '{"custom_12345": "label label", "priority": {"name": "${{inputs.priority}}"}}'
+        # Custom fields example
+        # fields: '{"priority": {"name": "${{inputs.priority}}"}, "custom_12345": "label label"}'
 
 
     - name: Inform of start of Jira
