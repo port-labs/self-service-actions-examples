@@ -33,7 +33,7 @@ jobs:
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-    - name: Inform of start of jira issue creation
+    - name: Inform starting of jira issue creation
       uses: port-labs/port-github-action@v1
       with:
         clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
@@ -43,7 +43,7 @@ jobs:
         logMessage: |
             Creating a new Jira issue.. ⛴️
 
-    - name: Create jira issue
+    - name: Create Jira issue
       id: create
       uses: atlassian/gajira-create@v3
       with:
@@ -57,7 +57,7 @@ jobs:
         # fields: '{"priority": {"name": "${{inputs.priority}}"}, "custom_12345": "label label"}'
 
 
-    - name: Inform of start of jira
+    - name: Inform creation of Jira issue
       uses: port-labs/port-github-action@v1
       with:
         clientId: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
