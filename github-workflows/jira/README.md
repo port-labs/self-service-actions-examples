@@ -18,7 +18,7 @@ An example of creating a Jira bug from Port using Port's self service actions.
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
 
-3. Optional - Install Port's Jira integration [learn more][https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira#installation] 
+3. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira#installation)
 >**Note** This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new issue created.
 
 4. Creating the action in Port
