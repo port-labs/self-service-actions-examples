@@ -1,0 +1,95 @@
+name: Create an issue in Jira
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        type: string
+      issuetype:
+        type: string
+      summary:
+        type: string
+      description:
+        type: string
+      fields:
+        type: string
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)
+        type: string
+jobs:
+  create-entity-in-port-and-update-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Starting to create jira issue
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: An example of a log message
+          - name: Create
+          
+       - name: Create an issue on Jira
+        id: create
+        uses: atlassian/gajira-create@v3
+        with:
+          project: "${{ github.event.inputs.project }}"
+          issuetype: "${{ github.event.inputs.issuetype }}"
+          summary: "${{ github.event.inputs.summary }}"
+          description: "${{ github.event.inputs.description }}"
+          fields: ${{ github.event.inputs.fields }}
+
+      # - name: Get Jira issue
+      # ${{ steps.create.outputs.id }}
+      
+      
+      # - name: Log created issue
+      #   run: echo "Issue ${{ steps.create.outputs.issue }} was created"
+      #       - name: UPSERT Entity
+      #         uses: port-labs/port-github-action@v1
+      #         with:
+      #           identifier: some_identifier
+      #           title: Some Title
+      #           team: "[]"
+      #           icon: DefaultBlueprint
+      #           blueprint: jiraIssue
+      #           properties: |-
+      #             {
+      #               "url": "https://example.com",
+      #               "status": "string",
+      #               "issueType": "string",
+      #               "components": [],
+      #               "assignee": "string",
+      #               "reporter": "string",
+      #               "creator": "string",
+      #               "priority": "string",
+      #               "created": "2024-01-16T20:31:53.306Z",
+      #               "updated": "2024-01-16T20:31:53.306Z"
+      #             }
+      #           relations: |-
+      #             {
+      #               "parentIssue": "related_entity_identifier",
+      #               "project": "related_entity_identifier",
+      #               "subtasks": [
+      #                 "related_entity_identifier",
+      #                 "another_related_entity_identifier"
+      #               ]
+      #             }
+      #           clientId: ${{ secrets.PORT_CLIENT_ID }}
+      #           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+      #           baseUrl: https://api.getport.io
+      #           operation: UPSERT
+      #           runId: ${{fromJson(inputs.port_payload).context.runId}}
+                
+            - name: Create a log message
+              uses: port-labs/port-github-action@v1
+              with:
+                clientId: ${{ secrets.PORT_CLIENT_ID }}
+                clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                baseUrl: https://api.getport.io
+                operation: PATCH_RUN
+                runId: ${{fromJson(inputs.port_payload).context.runId}}
+                logMessage: A jira issue has been created
