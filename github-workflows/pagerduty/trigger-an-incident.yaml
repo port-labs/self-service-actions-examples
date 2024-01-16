@@ -1,4 +1,4 @@
-name: UPSERT workflow
+name: Trigger An Incident In PagerDuty
 on:
   workflow_dispatch:
     inputs:
