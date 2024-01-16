@@ -31,7 +31,14 @@ jobs:
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: An example of a log message
           - name: Create
-          
+
+        - name: Login
+          uses: atlassian/gajira-login@v3
+          env:
+            JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+            JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+            JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+            
        - name: Create an issue on Jira
         id: create
         uses: atlassian/gajira-create@v3
