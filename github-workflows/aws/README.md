@@ -11,7 +11,7 @@ This GitHub action allows you to quickly create an EC2 Instance in AWS via Port 
 | ec2-name                | The name of the ec2 instance      | true     | -                  |
 
 
-## Quickstart - Create a pager duty incident from the service catalog
+## Quickstart - Create an EC2 Instance from the service catalog
 
 Follow these steps to get started with the Golang template
 
@@ -127,9 +127,51 @@ jobs:
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: |
               EC2 Instance created successfully ✅
-
 ```
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Create terraform files for provisioning the instance
+
+### main.tf
+```hcl
+data "aws_ami" "ubuntu" {
+    most_recent = true
+
+    filter {
+        name   = "name"
+        values = ["ubuntu/images/hvm-ssd/*20.04-amd64-server-*"]
+    }
+
+    filter {
+        name   = "virtualization-type"
+        values = ["hvm"]
+    }
+    
+    owners = ["099720109477"] # Canonical
+}
+
+provider "aws" {
+  region  = "us-east-1"
+}
+
+resource "aws_instance" "app_server" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  key_name      = "PORT"
+
+  tags = {
+    Name = var.ec2_name
+  }
+}
+
+```
+### variables.tf
+```hcl
+variable "ec2_name" {
+  type = string
+}
+```
+
+7. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 Congrats 🎉 You've created your instance in EC2 from Port!
+
