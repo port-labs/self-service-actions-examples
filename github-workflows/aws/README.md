@@ -129,9 +129,9 @@ jobs:
               EC2 Instance created successfully ✅
 ```
 
-6. Create terraform files for provisioning the instance
+6. Create terraform files ( main.tf and variables.tf ) for provisioning the instance
 
-### main.tf
+`main.tf`
 ```hcl
 data "aws_ami" "ubuntu" {
     most_recent = true
@@ -164,7 +164,7 @@ resource "aws_instance" "app_server" {
 }
 
 ```
-### variables.tf
+`variables.tf`
 ```hcl
 variable "ec2_name" {
   type = string
