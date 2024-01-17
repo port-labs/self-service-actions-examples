@@ -162,9 +162,8 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 
 ## Quickstart - Create a `PagerDuty service` from the service catalog
 
-Follow these steps to get started with the Golang template
-
 1. Create the following GitHub action secrets
+* `PAGERDUTY_API_KEY` - PagerDuty API Key [learn more](https://support.pagerduty.com/docs/api-access-keys#section-generate-a-user-token-rest-api-key:~:text=the%20browser%20alert.-,Generate%20a%20User%20Token%20REST%20API%20Key,-%F0%9F%9A%A7)
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
