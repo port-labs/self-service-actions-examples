@@ -47,25 +47,47 @@ Follow these steps to get started with the Golang template
         },
         "urgency": {
           "title": "Urgency",
-          "type": "number",
-          "minimum": 1,
-          "maximum": 4
+          "icon": "DefaultProperty",
+          "type": "string",
+          "default": "2",
+          "enum": [
+            "1",
+            "2",
+            "3"
+          ],
+          "enumColors": {
+            "1": "lightGray",
+            "2": "lightGray",
+            "3": "lightGray"
+          }
         },
         "assigned_to": {
+          "icon": "DefaultProperty",
           "title": "Assigned To",
           "description": "User this incident is assigned to",
           "type": "string"
         },
         "sysparm_display_value": {
-          "icon": "DefaultProperty",
           "title": "Sysparm Display Value",
           "description": "Determines the type of data returned, either the actual values from the database or the display values of the fields.",
+          "icon": "DefaultProperty",
           "type": "string",
-          "pattern": "^(true|false|all)?$",
-          "default": "false"
+          "default": "all",
+          "enum": [
+            "true",
+            "false",
+            "all"
+          ],
+          "enumColors": {
+            "true": "lightGray",
+            "false": "lightGray",
+            "all": "lightGray"
+          }
         }
       },
-      "required": [],
+      "required": [
+        "assigned_to"
+      ],
       "order": [
         "short_description",
         "assigned_to",
@@ -76,8 +98,8 @@ Follow these steps to get started with the Golang template
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "repo": "<Enter GitHub repository>",
-      "org": "<Enter GitHub organization>",
+      "org": "lordsarcastic",
+      "repo": "self-service",
       "workflow": "create-a-service-now-incident.yml",
       "omitUserInputs": false,
       "omitPayload": false,
