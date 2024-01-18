@@ -41,7 +41,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Create a log message
+      - name: Inform start of ServiceNow incident creation
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -62,7 +62,7 @@ jobs:
           customHeaders: '{"Content-Type": "application/json"}'
           data: '{"short_description": "${{ inputs.short_description }}", "assigned_to": "${{ inputs.assigned_to }}", "urgency": "${{ inputs.urgency }}", "sysparm_display_value": "${{ inputs.sysparm_display_value }}", "sysparm_input_display_value": "${{ inputs.sysparm_input_display_value }}"}'
 
-      - name: Create a log message
+      - name: Inform completion of ServiceNow incident creation
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -72,7 +72,7 @@ jobs:
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Finished request to create ServiceNow incident
 
-      - name: Create a log message
+      - name: Inform start of ingesting ServiceNow incident into Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -114,7 +114,7 @@ jobs:
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
 
-      - name: Create a log message
+      - name: Inform of workflow completion
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
