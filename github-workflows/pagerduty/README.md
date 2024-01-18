@@ -155,7 +155,7 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------|
 | name         | A unique identifier or title used to reference and distinguish the service in PagerDuty     | false    | -                  |
-| description              | A brief summary or explanation detailing the purpose or scope of the service in PagerDuty.                               | true     | -                  |
+| description              | A brief summary or explanation detailing the purpose or scope of the service in PagerDuty.                               | false     | -                  |
 | escalation_policy              | A set of rules in PagerDuty that determines the sequence of notifications to team members in response to an incident, ensuring timely attention and action                                                              | true    | -               |
 
 
@@ -168,8 +168,9 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
+3. Install Port's pager duty integration [learn more][https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty]
 >**Note** This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
-3. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
+4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
 ```json
 
@@ -225,7 +226,7 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 ```
 >**Note** Replace the invocation method with your own repository details.
 
-4. Create a workflow file under .github/workflows/create-a-service.yaml with the following content:
+5. Create a workflow file under .github/workflows/create-a-service.yaml with the following content:
 
 ```yml
 name: Create PagerDuty Service
@@ -279,7 +280,7 @@ jobs:
 
 ```
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 Congrats 🎉 You've created your first `service` in PagerDuty from Port!
 
@@ -305,8 +306,9 @@ Follow these steps to get started with the Golang template
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
 
 2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
+3. Install Port's pager duty integration [learn more][https://github.com/port-labs/Port-Ocean/tree/main/integrations/pagerduty]
 >**Note** This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
-3. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
+4. After you installed the integration, the blueprints `pagerdutyService` and `pagerdutyIncident` will appear, create the following action with the following JSON file on the `pagerdutyService` blueprint:
 
 ```json
 
@@ -362,7 +364,7 @@ Follow these steps to get started with the Golang template
 ```
 >**Note** Replace the invocation method with your own repository details.
 
-4. Create a workflow file under .github/workflows/create-an-incident.yaml with the following content:
+5. Create a workflow file under .github/workflows/create-an-incident.yaml with the following content:
 
 ```yml
 name: Trigger an Incident In PagerDuty
@@ -421,6 +423,6 @@ jobs:
              "The incident id is: ${{ steps.trigger.outputs}}"
 ```
 
-5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 Congrats 🎉 You've created your first incident in PagerDuty from Port!
