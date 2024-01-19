@@ -31,6 +31,8 @@ on:
           general context (blueprint, run id, etc...)
         type: string
     secrets:
+      OPSGENIE_API_URL:
+        required: true
       OPSGENIE_API_KEY:
         required: true
       PORT_CLIENT_ID:
@@ -54,7 +56,7 @@ jobs:
       - name: Create a Opsgenie incident
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://api.eu.opsgenie.com/v1/incidents/create"
+          url: "${{ secrets.OPSGENIE_API_URL }}/v1/incidents/create"
           method: "POST"
           customHeaders: '{"Content-Type": "application/json", "Authorization": "GenieKey ${{ secrets.OPSGENIE_API_KEY }}"}'
           data: '{"message": "${{ inputs.message }}", "description": "${{ inputs.description }}", "responders": ${{ inputs.responders }}, "tags": ${{ inputs.tags }}, "details": ${{ inputs.details }}, "priority": "${{ inputs.priority }}", "note": "${{ inputs.note }}", "impactedServices": ${{ inputs.impactedServices }}, "notifyStakeholders": ${{ inputs.notifyStakeholders }}}'

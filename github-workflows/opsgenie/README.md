@@ -15,6 +15,7 @@ This GitHub action allows you to quickly trigger incidents in Opsgenie via Port 
 Follow these steps to get started with the Golang template
 
 1. Create the following GitHub action secrets
+* `OPSGENIE_API_URL` - Opsgenie API URL (https://api.opsgenie.com or https://api.eu.opsgenie.com for EU accounts)
 * `OPSGENIE_API_KEY` - Opsgenie API Key
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
@@ -40,7 +41,7 @@ Follow these steps to get started with the Golang template
         },
         "description": {
           "title": "Description",
-          "description": "escription field of the incident that is generally used to provide a detailed information about the incident.",
+          "description": "Description field of the incident that is generally used to provide a detailed information about the incident.",
           "type": "string",
           "maxLength": 15000
         },
