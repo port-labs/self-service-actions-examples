@@ -16,6 +16,18 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
+      
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+            request to trigger PagerDuty incident received ...
+
       - uses: port-labs/pagerduty-incident-gha@v1
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -27,3 +39,14 @@ jobs:
           urgency: ${{ fromJson(inputs.port_payload).payload.properties.urgency }}
           service: ${{ fromJson(inputs.port_payload).context.entity }}
           blueprintIdentifier: 'pagerdutyIncident'
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+            PagerDuty incident has been successfully triggered ✅
