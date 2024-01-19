@@ -15,13 +15,13 @@ data "aws_ami" "ubuntu" {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region  = var.aws_region
 }
 
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
-  key_name      = "PORT"
+  instance_type = var.ec2_instance_type
+  key_name      = var.pem_key_name
 
   tags = {
     Name = var.ec2_name

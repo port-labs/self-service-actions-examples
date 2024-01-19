@@ -154,7 +154,7 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
 ## Inputs
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------|
-| name         | A unique identifier or title used to reference and distinguish the service in PagerDuty     | false    | -                  |
+| name         | A unique identifier or title used to reference and distinguish the service in PagerDuty     | true    | -                  |
 | description              | A brief summary or explanation detailing the purpose or scope of the service in PagerDuty.                               | false     | -                  |
 | escalation_policy              | A set of rules in PagerDuty that determines the sequence of notifications to team members in response to an incident, ensuring timely attention and action                                                              | true    | -               |
 
@@ -182,30 +182,31 @@ This GitHub action allows you to quickly create a service in PagerDuty via Port 
     "userInputs": {
       "properties": {
         "name": {
-          "title": "service_name",
+          "title": "name",
           "description": "Name of the PagerDuty Service",
           "icon": "pagerduty",
           "type": "string"
         },
         "description": {
-          "title": "service_description",
+          "title": "description",
           "description": "Description of the PagerDuty Service",
           "icon": "pagerduty",
           "type": "string"
         },
         "escalation_policy": {
-          "title": "escalation_policy_id",
+          "title": "escalation_policy",
           "icon": "pagerduty",
           "type": "object"
         }
       },
       "required": [
-        "escalation_policy_id"
+        "name",
+        "escalation_policy"
       ],
       "order": [
-        "service_name",
-        "service_description",
-        "escalation_policy_id"
+        "name",
+        "description",
+        "escalation_policy"
       ]
     },
     "invocationMethod": {
@@ -233,16 +234,16 @@ name: Create PagerDuty Service
 on:
   workflow_dispatch:
     inputs:
-      service_name:
+      name:
         description: 'Name of the PagerDuty Service'
         required: true
         type: string
-      service_description:
+      description:
         description: 'Description of the PagerDuty Service'
-        required: true
+        required: false
         type: string
-      escalation_policy_id:
-        description: 'Escalation Policy ID for the service'
+      escalation_policy:
+        description: 'Escalation Policy for the service'
         required: true
         type: string
 
@@ -251,6 +252,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Service in PagerDuty
+        id : create_service_request
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://api.pagerduty.com/services'
@@ -259,15 +261,13 @@ jobs:
           data: >-
             {
               "service": {
-                "name": "${{ github.event.inputs.service_name }}",
-                "description": "${{ github.event.inputs.service_description }}",
+                "name": "${{ github.event.inputs.name }}",
+                "description": "${{ github.event.inputs.description }}",
                 "escalation_policy": ${{ github.event.inputs.escalation_policy }}
               }
-            }
-            - name: Create a log message
+            } 
 
-      - name: "Report Status to Port"
-        id: log-response
+      - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -277,6 +277,58 @@ jobs:
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: |
              PagerDuty service created! ✅
+             Requesting for oncalls
+    
+      - name: Request for oncalls for escalation_policy
+        id: fetch_oncalls
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.pagerduty.com/oncalls?include[]=users&escalation_policy_ids[]=${{ fromJson(github.event.inputs.escalation_policy).id }}'
+          method: 'GET'
+          customHeaders: '{"Content-Type": "application/json", "Accept": "application/json", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}"}'
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+              Upserting Created PagerDuty Entity
+
+      - name: UPSERT PagerDuty Entity
+        uses: port-labs/port-github-action@v1
+        with:
+          identifier: "${{ fromJson(steps.create_service_request.outputs.response).service.id }}" 
+          title: "${{ fromJson(steps.create_service_request.outputs.response).service.summary }}" 
+          team: "[]"
+          icon: pagerduty
+          blueprint: pagerdutyService
+          properties: |-
+            {
+              "status": "${{ fromJson(steps.create_service_request.outputs.response).service.status }}",
+              "url": "${{ fromJson(steps.create_service_request.outputs.response).service.html_url }}",
+              "oncall": "${{ fromJson(steps.fetch_oncalls).oncalls }}"
+            }
+          relations: "{}"
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: UPSERT
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+              Upsert was successful ✅
 
 ```
 

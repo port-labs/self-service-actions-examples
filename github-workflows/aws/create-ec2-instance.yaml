@@ -1,12 +1,24 @@
-name: Provision t3.micro EC2
+name: Provision AN EC2 Instance
 
 on:
   workflow_dispatch:
     inputs:
-      ec2-name:
+      ec2_name:
         description: EC2 name
         required: true
         default: 'App Server'
+        type: string
+      ec2_instance_type:
+        description: EC2 instance type
+        required: false
+        default: "t3.micro"
+        type: string
+      pem_key_name:
+        description: EC2 pem key
+        required: true
+        type: string
+      port_payload:
+        required: true
         type: string
 jobs:
   provision-ec2:
@@ -25,14 +37,14 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: |
-              About to create ec2 instance ${{ github.event.inputs.ec2-name }} .. ⛴️
+              About to create ec2 instance ${{ github.event.inputs.ec2_name }} .. ⛴️
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
-          aws-region: us-east-1
+          aws-region: '${{ secrets.TF_USER_AWS_REGION }}'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -42,9 +54,12 @@ jobs:
       - name: Terraform Apply
         id:   apply
         env:
-          TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
+          TF_VAR_ec2_name:  "${{ github.event.inputs.ec2_name }}"
+          TF_VAR_pem_key_name: "${{ github.event.inputs.pem_key_name}}"
+          TF_VAR_aws_region: "${{ secrets.TF_USER_AWS_REGION }}"
+          TF_VAR_ec2_instance_type: "${{ github.event.inputs.ec2_instance_type}}"
         run: |
-          cd terraform-examples/ec2/
+          cd tf-example/
           terraform init
           terraform validate
           terraform plan 
