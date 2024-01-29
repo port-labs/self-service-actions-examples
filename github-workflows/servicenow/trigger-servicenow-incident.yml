@@ -122,4 +122,5 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          link: ${{ secrets.SERVICENOW_INSTANCE_URL }}/incident.do?sys_id=${{ fromJson(steps.servicenow_incident.outputs.response).result.sys_id }}
           logMessage: Finished ingesting ServiceNow incident into Port
