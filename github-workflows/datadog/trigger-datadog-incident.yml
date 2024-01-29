@@ -120,6 +120,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
+          link: ${{ secrets.DD_API_URL }}/incidents/${{ fromJson(steps.datadog_incident.outputs.response).data.id }}
           logMessage: Finished request to ingest Datadog incident into Port
 
       - name: Inform of workflow completion

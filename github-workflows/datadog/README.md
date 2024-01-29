@@ -14,7 +14,7 @@ This GitHub action allows you to quickly trigger incidents in Datadog via Port A
 ## Quickstart - Trigger Datadog incident from the service catalog
 
 1. Create the following GitHub action secrets
-* `DD_API_URL` - Datadog API URL (https://api.datadoghq.com or https://api.us5.datadoghq.com or any other region)
+* `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com). However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
 * `DD_API_KEY` - Datadog API Key
 * `DD_APPLICATION_KEY` - Datadog Application Key
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
