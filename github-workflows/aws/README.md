@@ -236,8 +236,8 @@ jobs:
 
 7. Create terraform files ( main.tf and variables.tf ) for provisioning the instance
 
-`main.tf`
-```hcl
+
+```hcl title="main.tf"
 data "aws_ami" "ubuntu" {
     most_recent = true
 
@@ -269,8 +269,8 @@ resource "aws_instance" "app_server" {
 }
 
 ```
-`variables.tf`
-```hcl
+
+```hcl title = "variables.tf"
 variable "ec2_name" {
   type = string
 }
