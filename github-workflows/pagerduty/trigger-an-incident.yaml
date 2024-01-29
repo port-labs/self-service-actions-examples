@@ -1,0 +1,55 @@
+name: Trigger an Incident In PagerDuty
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        type: string
+      event_action:
+        type: string
+      routing_key:
+        type: string
+      port_payload:
+        required: true
+        description: Port's payload, including details for who triggered the action and
+          general context (blueprint, run id, etc...)
+        type: string
+jobs:
+  create-entity-in-port-and-update-run:
+    runs-on: ubuntu-latest
+    steps: 
+
+      - name: Inform starting of PagerDuty trigger 
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+              About to trigger PagerDuty incident.. ⛴️
+              
+      - name: Send Event to PagerDuty
+        id: trigger
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://events.pagerduty.com/v2/enqueue'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Accept": "application/json"}'
+          data: >-
+            {
+              "payload": ${{ github.event.inputs.payload }},
+              "event_action": "${{ github.event.inputs.event_action }}",
+              "routing_key": "${{ github.event.inputs.routing_key }}"
+            }  
+      - name: Create a log message
+        id: log-response
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: |
+             PagerDuty incident triggered! ✅
+             "The incident id is: ${{ steps.trigger.outputs }}"
