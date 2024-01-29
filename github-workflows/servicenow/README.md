@@ -113,7 +113,7 @@ Follow these steps to get started with the Golang template
   }
 ]
 ```
->**Note** Replace the invocation method with your own repository details.
+>**Note** Update the `invocationMethod` field with your own repository details.
 
 5. Create a workflow file under .github/workflows/trigger-servicenow-incident.yml with the content in [trigger-servicenow-incident.yml](./trigger-servicenow-incident.yml)
 
