@@ -216,7 +216,7 @@ jobs:
           TF_VAR_aws_region: "${{ secrets.TF_USER_AWS_REGION }}"
           TF_VAR_ec2_instance_type: "${{ github.event.inputs.ec2_instance_type}}"
         run: |
-          cd terraform-examples/ec2/
+          cd github-workflows/aws/terraform-examples/ec2/
           terraform init
           terraform validate
           terraform plan 
