@@ -33,32 +33,32 @@ Follow these steps to get started with the Golang template
 ```json
 {
   "identifier": "toggle_a_feature_flag",
-  "title": "toggle-a-feature-flag",
+  "title": "Toggle A Feature Flag",
   "icon": "Launchdarkly",
   "userInputs": {
     "properties": {
       "feature_flag_key": {
-        "title": "feature_flag_key",
+        "title": "Feature Flag Key",
         "description": "LaunchDarkly Feature Flag Key",
         "icon": "Launchdarkly",
         "type": "string"
       },
       "project_key": {
         "description": "LaunchDarkly Project Key",
-        "title": "project_key",
+        "title": "Project Key",
         "icon": "Launchdarkly",
         "type": "string",
         "default": "default"
       },
       "environment_key": {
         "description": "LaunchDarkly Environment Key where the flag exists",
-        "title": "environment_key",
+        "title": "Environment Key",
         "icon": "Launchdarkly",
         "type": "string",
         "default": "test"
       },
       "flag_state": {
-        "title": "flag_state",
+        "title": "Flag State",
         "description": "Desired state of the feature flag (true for enabled, false for disabled)",
         "icon": "Launchdarkly",
         "type": "boolean",

@@ -106,19 +106,19 @@ Follow these steps to get started with the Golang template
   "userInputs": {
     "properties": {
       "pem_key_name": {
-        "title": "pem_key_name",
+        "title": "Pem Key Name",
         "description": "EC2 .pem key pair name",
         "icon": "EC2",
         "type": "string"
       },
       "ec2_name": {
         "icon": "EC2",
-        "title": "ec2_name",
+        "title": "EC2_Name",
         "description": "Name of the instance",
         "type": "string"
       },
       "ec2_instance_type": {
-        "title": "ec2_instance_type",
+        "title": "EC2 Instance Type",
         "description": "EC2 instance type",
         "icon": "EC2",
         "type": "string",
