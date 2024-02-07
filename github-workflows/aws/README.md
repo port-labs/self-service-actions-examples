@@ -99,55 +99,62 @@ Follow these steps to get started with the Golang template
 
 ```json
 [
-  {
-    "identifier": "create_an_ec_2_instance",
-    "title": "Create An EC2 Instance",
-    "icon": "EC2",
-    "userInputs": {
-      "properties": {
-        "pem_key_name": {
-          "title": "pem_key_name",
-          "description": "EC2 .pem key pair name",
-          "icon": "EC2",
-          "type": "string"
-        },
-        "ec2_name": {
-          "icon": "EC2",
-          "title": "ec2_name",
-          "description": "Name of the instance",
-          "type": "string"
-        },
-        "ec2_instance_type": {
-          "icon": "EC2",
-          "title": "ec2_instance_type",
-          "description": "EC2 instance type",
-          "type": "string",
-          "default": "t3.micro"
-        }
+{
+  "identifier": "create_an_ec_2_instance",
+  "title": "Create An EC2 Instance",
+  "icon": "EC2",
+  "userInputs": {
+    "properties": {
+      "pem_key_name": {
+        "title": "pem_key_name",
+        "description": "EC2 .pem key pair name",
+        "icon": "EC2",
+        "type": "string"
       },
-      "required": [
-        "ec2_name",
-        "pem_key_name"
-      ],
-      "order": [
-        "ec2_name",
-        "ec2_instance_type",
-        "pem_key_name"
-      ]
+      "ec2_name": {
+        "icon": "EC2",
+        "title": "ec2_name",
+        "description": "Name of the instance",
+        "type": "string"
+      },
+      "ec2_instance_type": {
+        "title": "ec2_instance_type",
+        "description": "EC2 instance type",
+        "icon": "EC2",
+        "type": "string",
+        "default": "t2.micro",
+        "enum": [
+          "t2.micro",
+          "t2.medium",
+          "t2.large",
+          "t2.xlarge",
+          "t2.2xlarge"
+        ]
+      }
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "mk-armah",
-      "repo": "my-repo",
-      "workflow": "create-ec2-instance.yaml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
-    },
-    "trigger": "CREATE",
-    "description": "Create An EC2 Instance from Port",
-    "requiredApproval": false
-  }
+    "required": [
+      "ec2_name",
+      "pem_key_name"
+    ],
+    "order": [
+      "ec2_name",
+      "ec2_instance_type",
+      "pem_key_name"
+    ]
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "mk-armah",
+    "repo": "my-repo",
+    "workflow": "create-ec2-instance.yaml",
+    "omitUserInputs": false,
+    "omitPayload": false,
+    "reportWorkflowStatus": true
+  },
+  "trigger": "CREATE",
+  "description": "Create An EC2 Instance from Port",
+  "requiredApproval": false
+}
 ]
 ```
 >**Note** Replace the invocation method with your own repository details.
