@@ -18,8 +18,6 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 
 ## Quickstart - Toggle a lauchdarkly feature flag from the service catalog
 
-Follow these steps to get started with the Golang template
-
 1. Create the following GitHub action secrets
 * `LAUNCHDARKLY_ACCESS_TOKEN` - a token with permission to toggle a feature flag in LaunchDarkly [learn more](https://docs.launchdarkly.com/home/account-security/api-access-tokens)
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
@@ -33,7 +31,7 @@ Follow these steps to get started with the Golang template
 ```json
 {
   "identifier": "toggle_a_feature_flag",
-  "title": "Toggle A Feature Flag",
+  "title": "Toggle LaunchDarkly Feature Flag",
   "icon": "Launchdarkly",
   "userInputs": {
     "properties": {
@@ -123,7 +121,7 @@ jobs:
   toggle-feature-flag:
     runs-on: ubuntu-latest
     steps:
-      - name: Log Before Toggling
+      - name: Inform toggling of Launchdarkly feature flag
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -133,7 +131,7 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Attempting to toggle feature flag '${{ github.event.inputs.feature_flag_key }}' in '${{ github.event.inputs.environment_key }}' environment to ${{ github.event.inputs.flag_state }}."
 
-      - name: Toggle Feature Flag in LaunchDarkly
+      - name: Toggle feature flag in Launchdarkly
         id: "toggle_feature_flag"
         uses: fjogeleit/http-request-action@v1
         with:
@@ -147,7 +145,7 @@ jobs:
               "value": ${{ github.event.inputs.flag_state }}
             }]
 
-      - name: Convert CreationDate to date-time format
+      - name: Convert creationDate to date-time format
         id: format_date
         run: |
           timestamp="${{ fromJson(steps.toggle_feature_flag.outputs.response).creationDate }}"
@@ -156,7 +154,7 @@ jobs:
           echo "creationDate=${formatted_date}" >> $GITHUB_OUTPUT
           echo "creationDate=${formatted_date}"
           
-      - name: Log Before Upserting Entity
+      - name: Inform ingestion of Launchdarkly feature flag to Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -164,9 +162,9 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Moving on to upsert updates to Port"
+          logMessage: "Attempting to upsert entity to Port"
           
-      - name: UPSERT Entity
+      - name: Upsert Launchdarkly entity to Port
         uses: port-labs/port-github-action@v1
         with:
           identifier: "${{ fromJson(steps.toggle_feature_flag.outputs.response).key }}"
@@ -195,7 +193,7 @@ jobs:
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
 
           
-      - name: Log After Toggling
+      - name: Inform completion of Launchdarkly feature flag ingestion into Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
