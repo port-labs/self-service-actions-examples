@@ -512,10 +512,12 @@ This GitHub action allows you to quickly change incident owner in PagerDuty via 
   "userInputs": {
     "properties": {
       "incident_id": {
+        "icon": "pagerduty",
         "title": "Incident Id",
         "description": "ID of the PagerDuty Incident",
-        "icon": "pagerduty",
-        "type": "string"
+        "type": "string",
+        "blueprint": "pagerdutyIncident",
+        "format": "entity"
       },
       "new_owner_user_id": {
         "title": "New Owner User ID",
@@ -524,18 +526,21 @@ This GitHub action allows you to quickly change incident owner in PagerDuty via 
         "type": "string"
       },
       "from": {
+        "icon": "pagerduty",
         "title": "From",
         "description": "The email address of a valid user associated with the account making the request.",
-        "icon": "pagerduty",
         "type": "string"
       }
     },
     "required": [
-      "new_owner_user_id"
+      "new_owner_user_id",
+      "incident_id",
+      "from"
     ],
     "order": [
       "incident_id",
-      "new_owner_user_id"
+      "new_owner_user_id",
+      "from"
     ]
   },
   "invocationMethod": {
@@ -585,7 +590,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - name: Log Executing Request to Change Owner
+      - name: Inform execution of request to change incident owner
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -617,22 +622,7 @@ jobs:
               }
             }
 
-      - name: Log Before Processing Incident Response
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Getting incident object from response recieved ..."
-
-      - name: Get Incident Object from Response
-        id: incident
-        run: |
-          echo "incident=${{ toJson(steps.change_owner.outputs.response)}}" >> $GITHUB_ENV
-
-      - name: Log Before Upserting Entity
+      - name: Inform ingestion of pagerduty feature flag to Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -642,7 +632,7 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Reporting the updated incident back to port ..."
 
-      - name: UPSERT Entity
+      - name: Upsert pagerduty entity to Port 
         uses: port-labs/port-github-action@v1
         with:
           identifier: "${{ fromJson(steps.change_owner.outputs.response).incident.id }}"
@@ -664,7 +654,7 @@ jobs:
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
 
-      - name: Log After Upserting Entity
+      - name: Inform completion of pagerduty feature flag ingestion into Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
