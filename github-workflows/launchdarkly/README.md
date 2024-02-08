@@ -11,8 +11,8 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------|
 | feature_flag_key         | LaunchDarkly Feature Flag Key                                                       | true    | -                  |
-| project_key              | The LaunchDarkly Project Key where the feature flag exists                                                     | true     | default                  |
-| environment_key              | The LaunchDarkly Environment Key where the flag exists                                                              | true    | test               |
+| project_key              | The LaunchDarkly Project Key where the feature flag exists                                                     | true     | -                  |
+| environment_key              | The LaunchDarkly Environment Key where the flag exists                                                              | true    | -               |
 | flag_state           | Desired state of the feature flag (true for enabled, false for disabled)                                                | true     | true                  |
 
 
