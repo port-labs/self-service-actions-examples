@@ -191,7 +191,6 @@ jobs:
           baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
-
           
       - name: Inform completion of Launchdarkly feature flag ingestion into Port
         uses: port-labs/port-github-action@v1
