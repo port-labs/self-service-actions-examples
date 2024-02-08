@@ -65,12 +65,12 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
     },
     "required": [
       "feature_flag_key",
-      "project_key"
     ],
     "order": [
       "feature_flag_key",
       "project_key",
-      "environment_key"
+      "environment_key",
+      "flag_state"
     ]
   },
   "invocationMethod": {
