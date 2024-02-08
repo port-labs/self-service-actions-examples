@@ -31,32 +31,36 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
 ```json
 {
   "identifier": "toggle_a_feature_flag",
-  "title": "Toggle LaunchDarkly Feature Flag",
+  "title": "toggle-a-feature-flag",
   "icon": "Launchdarkly",
   "userInputs": {
     "properties": {
       "feature_flag_key": {
-        "title": "Feature Flag Key",
-        "description": "LaunchDarkly Feature Flag Key",
         "icon": "Launchdarkly",
-        "type": "string"
+        "title": "feature_flag_key",
+        "description": "LaunchDarkly Feature Flag Key",
+        "type": "string",
+        "blueprint": "launchDarklyFeatureFlag",
+        "format": "entity"
       },
       "project_key": {
+        "title": "project_key",
         "description": "LaunchDarkly Project Key",
-        "title": "Project Key",
         "icon": "Launchdarkly",
         "type": "string",
-        "default": "default"
+        "blueprint": "launchDarklyProject",
+        "format": "entity"
       },
       "environment_key": {
-        "description": "LaunchDarkly Environment Key where the flag exists",
-        "title": "Environment Key",
         "icon": "Launchdarkly",
+        "description": "LaunchDarkly Environment Key where the flag exists",
+        "title": "environment_key",
         "type": "string",
-        "default": "test"
+        "blueprint": "launchDarklyEnvironment",
+        "format": "entity"
       },
       "flag_state": {
-        "title": "Flag State",
+        "title": "flag_state",
         "description": "Desired state of the feature flag (true for enabled, false for disabled)",
         "icon": "Launchdarkly",
         "type": "boolean",
@@ -65,6 +69,7 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
     },
     "required": [
       "feature_flag_key",
+      "project_key"
     ],
     "order": [
       "feature_flag_key",
@@ -75,8 +80,8 @@ This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via P
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "your-github-org",
-    "repo": "your-github-repository",
+    "org": "mk-armah",
+    "repo": "jira-actions",
     "workflow": "toggle-a-feature-flag.yaml",
     "omitUserInputs": false,
     "omitPayload": false,
