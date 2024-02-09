@@ -1,0 +1,38 @@
+{
+    "identifier": "delete_repo",
+    "title": "Delete Repo",
+    "icon": "Github",
+    "userInputs": {
+      "properties": {
+        "org_name": {
+          "icon": "Github",
+          "title": "Organsation Name",
+          "type": "string",
+          "default": "phalbert"
+        },
+        "delete_dependents": {
+          "icon": "Github",
+          "title": "Delete Dependent Items",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [],
+      "order": [
+        "org_name",
+        "delete_dependents"
+      ]
+    },
+    "invocationMethod": {
+      "type": "GITHUB",
+      "org": "<ORG_>",
+      "repo": "<REPO_TEAM>",
+      "workflow": "delete-repo.yml",
+      "omitUserInputs": false,
+      "omitPayload": false,
+      "reportWorkflowStatus": true
+    },
+    "trigger": "DELETE",
+    "description": "A github action that deletes a github repo",
+    "requiredApproval": false
+  }

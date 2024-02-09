@@ -16,3 +16,4 @@ Find your port client id and secret from [this guide](https://docs.getport.io/bu
 | Action | Workflow | Description |
 |----------|----------|----------|
 | `delete-repo-action.json` | `delete-repo.yml` | A github action that deletes a github repo  |
+| `manage-pr-action.json` | `manage-pr.yml` | A github action that manages a github PR. `close` or `merge`  |

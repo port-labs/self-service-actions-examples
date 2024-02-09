@@ -1,0 +1,39 @@
+{
+    "identifier": "manage_a_pr",
+    "title": "Manage a PR",
+    "icon": "Github",
+    "userInputs": {
+      "properties": {
+        "action": {
+          "title": "Action",
+          "description": "What action to take",
+          "icon": "Git",
+          "type": "string",
+          "enum": [
+            "close",
+            " merge"
+          ],
+          "enumColors": {
+            "close": "lightGray",
+            " merge": "lightGray"
+          }
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "order": []
+    },
+    "invocationMethod": {
+      "type": "GITHUB",
+      "org": "<ORG_>",
+      "repo": "<REPO_TEAM>",
+      "workflow": "manage-pr.yml",
+      "omitUserInputs": false,
+      "omitPayload": false,
+      "reportWorkflowStatus": true
+    },
+    "trigger": "DAY-2",
+    "description": "Manage a pull request",
+    "requiredApproval": false
+  }
