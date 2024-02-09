@@ -11,7 +11,7 @@
           "type": "string",
           "enum": [
             "close",
-            " merge"
+            "merge"
           ],
           "enumColors": {
             "close": "lightGray",
