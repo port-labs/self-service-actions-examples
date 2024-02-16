@@ -698,8 +698,7 @@ This GitHub action allows you to quickly acknowledge incident in PagerDuty via P
         "icon": "pagerduty",
         "title": "From",
         "description": "User Email",
-        "type": "string",
-        "default": "michaelarmah@getport.io"
+        "type": "string"
       }
     },
     "required": [],
