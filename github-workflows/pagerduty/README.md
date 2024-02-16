@@ -666,7 +666,6 @@ jobs:
 ```
 
 
-
 # Acknowlege Incident In Pagerduty
 
 This GitHub action allows you to quickly acknowledge incident in PagerDuty via Port Actions with ease.
@@ -676,7 +675,7 @@ This GitHub action allows you to quickly acknowledge incident in PagerDuty via P
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
 | from              | The email address of a valid user associated with the account making the request.                                                              | true    | -               |
 
-## Quickstart - Change Incident Owner In Pagerduty
+## Quickstart - Acknowlege Incident In Pagerduty
 
 1. Create the following GitHub action secrets
 * `PAGERDUTY_API_KEY` - PagerDuty API Key [learn more](https://support.pagerduty.com/docs/
@@ -724,7 +723,7 @@ This GitHub action allows you to quickly acknowledge incident in PagerDuty via P
 ```
 >**Note** Replace the invocation method with your own repository details.
 
-5. Create a workflow file under .github/workflows/change-incident-owner.yaml with the following content:
+5. Create a workflow file under .github/workflows/acknowlege-incident.yaml with the following content:
 
 ```yml
 name: Acknowledge Incident In PagerDuty
@@ -826,3 +825,5 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Entity upserting was successful ✅"
 ```
+
+Congrats 🎉 You've successfully acknowleged an incident in PagerDuty from Port!
