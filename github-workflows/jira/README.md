@@ -61,7 +61,7 @@ An example of creating a Jira bug from Port using Port's self service actions.
       "org": "<Enter GitHub organization>",
       "workflow": "jira.yml"
     },
-    "trigger": "Create",
+    "trigger": "CREATE",
     "description": "Report a bug in Port to our product team.",
     "requiredApproval": false
   }
