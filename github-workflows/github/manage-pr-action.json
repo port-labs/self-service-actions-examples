@@ -26,7 +26,7 @@
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "org": "<ORG_>",
+      "org": "<ORG_ID>",
       "repo": "<REPO_TEAM>",
       "workflow": "manage-pr.yml",
       "omitUserInputs": false,
