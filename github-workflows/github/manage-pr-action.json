@@ -15,7 +15,7 @@
           ],
           "enumColors": {
             "close": "lightGray",
-            " merge": "lightGray"
+            "merge": "lightGray"
           }
         }
       },
