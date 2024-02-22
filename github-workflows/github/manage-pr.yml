@@ -1,6 +1,6 @@
 name: Manage Pull Request
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       action: # 'close' or 'action' -- make this a select in Port UI
