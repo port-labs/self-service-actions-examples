@@ -34,6 +34,6 @@
       "reportWorkflowStatus": true
     },
     "trigger": "DAY-2",
-    "description": "Manage a pull request",
+    "description": "Manage Github pullrequest",
     "requiredApproval": false
   }
