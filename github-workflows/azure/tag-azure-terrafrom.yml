@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        # We keep Terraform files in the terraform directory.
+        # The Path to your terraform files
         working-directory: ./terraform
         # working-directory: ./
 
