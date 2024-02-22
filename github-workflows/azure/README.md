@@ -10,18 +10,16 @@ This folder contains a series of workflows that can be triggered from Port to mo
 
 Find your port client id and secret from [this guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)
 
-2. Azure Credentials
+2. Azure Credentials.
 
-Before using this action, you need to create a GitHub Action secret named `AZURE_CREDENTIALS`. The secret should contain Azure credentials in JSON format, including the clientSecret, subscriptionId, tenantId, and clientId.
+  - `AZURE_CLIENT_ID`: specifies the login client id. It could be the client id of a service principal or a user-assigned managed identity.
+  - `AZURE_CLIENT_SECRET`: specifies the login client secret. It could be the client id of a service principal or a user-assigned managed identity.
+  - `AZURE_TENANT_ID`: specifies the login tenant id.
+  - `AZURE_SUBSCRIPTION_ID`:specifies the login subscription id.
 
-```yaml
-AZURE_CREDENTIALS = {
-    "clientSecret": "******",
-    "subscriptionId": "******",
-    "tenantId": "******",
-    "clientId": "******"
-}
-```
+To use an azure backend to store your terrraform state, add the following credentials:
+  - `AZURE_RESOURCE_GROUP`
+  - `TF_STORAGE_ACCOUNT`
 
 ### Port Actions
 
