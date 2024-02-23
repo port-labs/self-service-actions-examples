@@ -28,7 +28,18 @@ jobs:
         working-directory: ./terraform
 
     steps:
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          logMessage: |
+            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
       - name: Checkout the repository to the runner
+        if: always()
         uses: actions/checkout@v2
 
       - name: Setup Terraform with specified version on the runner

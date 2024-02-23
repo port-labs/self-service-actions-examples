@@ -8,15 +8,25 @@ on:
         type: string
       port_payload:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
   tag-s3-bucket:
     runs-on: ubuntu-latest
     steps:
+    - name: Inform starting of action
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.PORT_CLIENT_ID }}
+        clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+        operation: PATCH_RUN
+        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        logMessage: |
+          Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
+      if: always()
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -41,3 +51,14 @@ jobs:
         aws s3api put-bucket-tagging \
           --bucket ${BUCKET_NAME} \
           --tagging "TagSet=${TAGS}"
+
+    - name: Create a log message
+      uses: port-labs/port-github-action@v1
+      with:
+        clientId: ${{ secrets.PORT_CLIENT_ID }}
+        clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+        baseUrl: https://api.getport.io
+        operation: PATCH_RUN
+        runId: ${{fromJson(inputs.port_payload).context.runId}}
+        logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+
