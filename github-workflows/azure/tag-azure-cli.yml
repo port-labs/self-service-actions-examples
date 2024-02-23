@@ -37,3 +37,13 @@ jobs:
             resource=$(az resource show -g ${RESOURCE_GROUP} -n ${STORAGE_NAME} --resource-type Microsoft.Storage/storageAccounts --query "id" --output tsv)
             tags=$(echo ${TAGS} | jq -r 'to_entries|map("\(.key)=\(.value|tojson)")|join(" ")')
             az tag create --resource-id $resource --tags $tags
+
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
