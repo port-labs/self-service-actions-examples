@@ -479,7 +479,6 @@ jobs:
 
 Congrats 🎉 You've created your first incident in PagerDuty from Port!
 
-
 # Change Incident Owner In Pagerduty
 
 This GitHub action allows you to quickly change incident owner in PagerDuty via Port Actions with ease.
