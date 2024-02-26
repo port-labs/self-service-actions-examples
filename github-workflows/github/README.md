@@ -108,87 +108,104 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
       "averageOpenToCloseTime": {
         "icon": "DefaultProperty",
         "title": "Average Open To Close Time",
-        "type": "number"
+        "type": "number",
+        "description": "Average time from PR open to close in hours."
       },
       "averageTimeToFirstReview": {
         "title": "Average Time To First Review",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average time until first PR review in hours."
       },
       "averageTimeToApproval": {
         "title": "Average Time To Approval",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average time from PR open to approval in hours."
       },
       "prsOpened": {
         "title": "PRs Opened",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Total PRs opened in the timeframe."
       },
       "weeklyPrsMerged": {
         "title": "Weekly PRs Merged",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average number of PRs merged per week."
       },
       "averageReviewsPerPr": {
         "title": "Average Review Per PR",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average number of reviews per PR."
       },
       "averageCommitsPerPr": {
         "title": "Average Commits Per PR",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average number of commits per PR."
       },
       "averageLocChangedPerPr": {
         "title": "Average Loc Changed Per Per",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average lines of code changed per PR."
       },
       "averagePrsReviewedPerWeek": {
         "title": "Average PRs Review Per Week",
         "type": "number",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average PRs reviewed per week."
       },
       "totalDeployments": {
         "title": "Total Deployments",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Total number of deployments in the timeframe."
       },
       "deploymentRating": {
         "title": "Deployment Rating",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Qualitative rating of deployment success. e.g Elite"
       },
       "numberOfUniqueDeploymentDays": {
         "title": "Number of Unique Deployments",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Days with at least one deployment."
       },
       "deploymentFrequency": {
         "title": "Deployment Frequency",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Frequency of deployments"
       },
       "leadTimeForChangesInHours": {
         "title": "Lead Time For Changes In Hours",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average time from commit to deployment in hours."
       },
       "leadTimeRating": {
         "title": "Lead Time Rating",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Qualitative rating of lead time for changes, e.g Elite."
       },
       "workflowAverageTimeDuration": {
         "title": "Workflow Average Time Duration",
         "type": "string",
-        "icon": "DefaultProperty"
+        "icon": "DefaultProperty",
+        "description": "Average duration of CI/CD workflows in hours."
       },
       "timeFrameInWeeks": {
         "icon": "DefaultProperty",
         "title": "TimeFrame in Weeks",
-        "type": "number"
+        "type": "number",
+        "description": "Timeframe for the metrics in weeks."
       }
     },
     "required": []
@@ -198,6 +215,7 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
   "aggregationProperties": {},
   "relations": {}
 }
+
 ```
 
 6. Create a workflow file under .github/workflows/dora-metrics.yaml with the content in [dora-metrics.yml](./dora-metrics.yaml)
