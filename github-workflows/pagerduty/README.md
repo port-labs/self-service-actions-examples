@@ -587,8 +587,7 @@ on:
 jobs:
   change-incident-owner:
     runs-on: ubuntu-latest
-    steps:
-      
+    steps:      
       - name: Inform execution of request to change incident owner
         uses: port-labs/port-github-action@v1
         with:
@@ -742,7 +741,6 @@ jobs:
   acknowledge_incident:
     runs-on: ubuntu-latest
     steps:
-      
       - name: Log Executing Request to Acknowledge Incident
         uses: port-labs/port-github-action@v1
         with:
