@@ -9,7 +9,6 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
 ## Inputs
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------|
-| name         | A unique identifier or title used to reference and distinguish the service in PagerDuty     | true    | -                  |
 | repository              | GitHub repository in owner/repo format eg. port-labs/self-service-actions                               | true     | -                  |
 | timeframe              | Time frame in weeks to calculate metrics on                                                              | true    | -               |
 
@@ -185,6 +184,11 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
         "title": "Workflow Average Time Duration",
         "type": "string",
         "icon": "DefaultProperty"
+      },
+      "timeFrameInWeeks": {
+        "icon": "DefaultProperty",
+        "title": "TimeFrame in Weeks",
+        "type": "number"
       }
     },
     "required": []
