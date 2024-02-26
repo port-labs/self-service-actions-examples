@@ -83,8 +83,8 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "mk-armah",
-    "repo": "jira-actions",
+    "org": "my-org",
+    "repo": "my-org",
     "workflow": "dora-metrics.yaml",
     "omitUserInputs": false,
     "omitPayload": false,
@@ -97,7 +97,106 @@ This GitHub action allows you to quickly ingest dora metrics of each service (re
 ```
 >**Note** Replace the invocation method with your own repository details.
 
-5. Create a workflow file under .github/workflows/dora-metrics.yaml with the content in [dora-metrics.yml](./dora-metrics.yaml)
+5. Create a blueprint for Dora metrics to be ingested
+
+```json
+{
+  "identifier": "doraMetrics",
+  "title": "Dora Metrics",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "averageOpenToCloseTime": {
+        "icon": "DefaultProperty",
+        "title": "Average Open To Close Time",
+        "type": "number"
+      },
+      "averageTimeToFirstReview": {
+        "title": "Average Time To First Review",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "averageTimeToApproval": {
+        "title": "Average Time To Approval",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "prsOpened": {
+        "title": "PRs Opened",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "weeklyPrsMerged": {
+        "title": "Weekly PRs Merged",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "averageReviewsPerPr": {
+        "title": "Average Review Per PR",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "averageCommitsPerPr": {
+        "title": "Average Commits Per PR",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "averageLocChangedPerPr": {
+        "title": "Average Loc Changed Per Per",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "averagePrsReviewedPerWeek": {
+        "title": "Average PRs Review Per Week",
+        "type": "number",
+        "icon": "DefaultProperty"
+      },
+      "totalDeployments": {
+        "title": "Total Deployments",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "deploymentRating": {
+        "title": "Deployment Rating",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "numberOfUniqueDeploymentDays": {
+        "title": "Number of Unique Deployments",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "deploymentFrequency": {
+        "title": "Deployment Frequency",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "leadTimeForChangesInHours": {
+        "title": "Lead Time For Changes In Hours",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "leadTimeRating": {
+        "title": "Lead Time Rating",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "workflowAverageTimeDuration": {
+        "title": "Workflow Average Time Duration",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+6. Create a workflow file under .github/workflows/dora-metrics.yaml with the content in [dora-metrics.yml](./dora-metrics.yaml)
 
 ```yaml
 name: Ingest DORA Metrics
@@ -269,12 +368,12 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "Entity upserting was successful ✅"
 ```
-6. Create a python script under src/calculate_pr_metrics.py with the content in [calculate_pr_metrics.py](./src/calculate_pr_metrics.py)
+7. Create a python script under src/calculate_pr_metrics.py with the content in [calculate_pr_metrics.py](./src/calculate_pr_metrics.py)
 
-7. Create a powershell script under src/deploymentfrequency.ps1 with the content in [deploymentfrequency.ps1](./src/deploymentfrequency.ps1)
+8. Create a powershell script under src/deploymentfrequency.ps1 with the content in [deploymentfrequency.ps1](./src/deploymentfrequency.ps1)
 
-8. Create a powershell script under src/leadtimeforchanges.ps1 with the content in [leadtimeforchanges.ps1](./src/leadtimeforchanges.ps1)
+9. Create a powershell script under src/leadtimeforchanges.ps1 with the content in [leadtimeforchanges.ps1](./src/leadtimeforchanges.ps1)
 
-9. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+10. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
 Congrats 🎉 You've triggered your first incident in Opsgenie from Port!
