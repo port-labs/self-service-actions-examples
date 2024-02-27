@@ -16,7 +16,6 @@ jobs:
   acknowledge_incident:
     runs-on: ubuntu-latest
     steps:
-      
       - name: Log Executing Request to Acknowledge Incident
         uses: port-labs/port-github-action@v1
         with:
@@ -44,6 +43,17 @@ jobs:
                   }
                 ]
               }
+
+      - name: Log Acknowledge Incident Request Failure 
+        if: failure()
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          logMessage: "Request to acknowledge incident failed ..."
 
       - name: Log Before Processing Incident Response
         uses: port-labs/port-github-action@v1
@@ -86,6 +96,17 @@ jobs:
           baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
+
+      - name: Log Upsert Entity Failure 
+        if: failure()
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          logMessage: "Failed to upsert pagerduty incident to port ..."
 
       - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
