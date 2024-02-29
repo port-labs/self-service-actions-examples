@@ -71,3 +71,5 @@ Follow these steps to get started with the Golang template
 7. Done! wait for the project tags to be updated in SonarQube
 
 Congrats 🎉 You've added tags to your SonarQube project from Port!
+
+**Note:** Due to SonarQube API's limitation, this action replaces the tags on the project with the new ones specified. If you want to add to the already existing tags, copy the existing tags and add it with the new ones you are adding.
