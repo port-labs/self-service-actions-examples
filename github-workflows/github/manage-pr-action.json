@@ -12,7 +12,7 @@
           "enum": [
             "close",
             "merge",
-            "aprrove"
+            "approve"
           ],
           "enumColors": {
             "close": "lightGray",
