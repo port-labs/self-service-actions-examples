@@ -10,7 +10,7 @@ This GitHub action allows you to quickly add tags to a SonarQube project via Por
 * SonarQube instance URL, SonarQube API token. Check [SonarQube's documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/user-account/generating-and-using-tokens/) on how to retrieve your API Token
 * [Port's GitHub app](https://github.com/apps/getport-io) installed
 
-## Quickstart - Add tag to SonarQube project from the service catalog
+## Add tag to SonarQube project from the service catalog
 
 Follow these steps to get started with the Golang template
 
@@ -20,10 +20,9 @@ Follow these steps to get started with the Golang template
 * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-2. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-3. Optional - Install Port's SonarQube integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
->**Note** This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
-4. After you installed the integration, the blueprints `sonarQubeProject`, `sonarQubeIssue` and `sonarQubeAnalysis` will appear, create the following action with the following JSON file on the `sonarQubeProject` blueprint:
+2. Optional - Install Port's SonarQube integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+>**Note** The above step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new incident created.
+3. After you installed the integration, the blueprints `sonarQubeProject`, `sonarQubeIssue` and `sonarQubeAnalysis` will appear, create the following action with the following JSON file on the `sonarQubeProject` blueprint:
 
 ```json
 [
@@ -62,13 +61,13 @@ Follow these steps to get started with the Golang template
 }
 ]
 ```
->**Note** Update the `invocationMethod` field with your own repository details.
+>**Note** In the `invocationMethod` section, replace the `org` and `repo` values with your own repository details
 
-5. Create a workflow file under .github/workflows/add-tags-to-sonarqube-project.yml with the content in [add-tags-to-sonarqube-project.yml](./add-tags-to-sonarqube-project.yml)
+4. Create a workflow file under .github/workflows/add-tags-to-sonarqube-project.yml with the content in [add-tags-to-sonarqube-project.yml](./add-tags-to-sonarqube-project.yml)
 
-6. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
+5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve)
 
-7. Done! wait for the project tags to be updated in SonarQube
+6. Done! wait for the project tags to be updated in SonarQube
 
 Congrats 🎉 You've added tags to your SonarQube project from Port!
 
