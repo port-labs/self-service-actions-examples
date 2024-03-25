@@ -1,6 +1,6 @@
 {
     "identifier": "manage_a_pr",
-    "title": "Manage a PR",
+    "title": "Manage a GitHub PR",
     "icon": "Github",
     "userInputs": {
       "properties": {
